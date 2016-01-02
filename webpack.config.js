@@ -1,17 +1,22 @@
 var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: [
       'webpack/hot/dev-server',
       'webpack-dev-server/client?http://localhost:8080',
       path.resolve(__dirname, 'app/js/entry.js'),
-      path.resolve(__dirname, 'build/index.html')
     ],
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js'
 
     },
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: "Marg app"
+      })
+    ],
     devtool: 'eval',
     module: {
         preLoaders: [

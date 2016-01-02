@@ -1,5 +1,6 @@
 var path = require('path');
 var node_modules_dir = path.resolve(__dirname, 'node_modules');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var config = {
   entry: path.resolve(__dirname, 'app/js/entry.js'),
@@ -7,6 +8,11 @@ var config = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: "Margnal Tax Calculator"
+    })
+  ],
   module: {
     loaders: [{
       test: /\.js$/,
