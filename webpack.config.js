@@ -1,8 +1,15 @@
+var path = require('path');
+
 module.exports = {
-    entry: getEntrySources(['./src/js/entry.js']),
+    entry: [
+      'webpack/hot/dev-server',
+      'webpack-dev-server/client?http://localhost:8080',
+      path.resolve(__dirname, 'app/js/entry.js')
+    ],
     output: {
-        publicPath: 'http://localhost:8080/',
-        filename: 'build/bundle.js'
+        path: path.resolve(__dirname, 'build'),
+        filename: 'bundle.js'
+
     },
     devtool: 'eval',
     module: {
@@ -16,13 +23,8 @@ module.exports = {
         loaders: [
             {
                 test: /\.scss$/,
-                include: /src/,
-                loaders: [
-                    'style',
-                    'css',
-                    'autoprefixer?browsers=last 3 versions',
-                    'sass?outputStyle=expanded'
-                ]
+                include: /app/,
+                loader: 'style!css!sass',
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
@@ -42,7 +44,6 @@ module.exports = {
         ]
     }
 };
-
 function getEntrySources(sources) {
     if (process.env.NODE_ENV !== 'production') {
         sources.push('webpack-dev-server/client?http://localhost:8080');
