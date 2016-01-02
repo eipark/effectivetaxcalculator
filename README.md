@@ -1,2 +1,2 @@
 # marginaltaxcalc
-marginal tax rate calculator
+marginal tax rate calculator.
