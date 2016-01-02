@@ -1,60 +1,75 @@
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-    entry: [
-      'webpack/hot/dev-server',
-      'webpack-dev-server/client?http://localhost:8080',
-      path.resolve(__dirname, 'app/js/entry.js'),
-    ],
-    output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: 'bundle.js'
+var IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
-    },
+module.exports = {
+    entry: getEntrySources([
+      path.resolve(__dirname, 'app/js/entry.js'),
+    ]),
+    output: getOutput(),
     plugins: [
       new HtmlWebpackPlugin({
-        title: "Marg app"
+        title: "marg: " + IS_PRODUCTION
       })
     ],
     devtool: 'eval',
     module: {
-        preLoaders: [
-            {
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'source-map'
-            }
-        ],
-        loaders: [
-            {
-                test: /\.scss$/,
-                include: /app/,
-                loader: 'style!css!sass',
-            },
-            {
-                test: /\.(jpe?g|png|gif|svg)$/i,
-                loaders: [
-                    'url?limit=8192',
-                    'img'
-                ]
-            },
-            {
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                loaders: [
-                    'react-hot',
-                    'babel?stage=0'
-                ]
-            }
-        ]
+        preLoaders: getPreLoaders(),
+        loaders: getLoaders()
     }
 };
+
 function getEntrySources(sources) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (!IS_PRODUCTION) {
         sources.push('webpack-dev-server/client?http://localhost:8080');
-        sources.push('webpack/hot/only-dev-server');
+        sources.push('webpack/hot/dev-server');
     }
 
     return sources;
+}
+
+function getOutput() {
+  var outputDir = IS_PRODUCTION ? "dist" : "build";
+
+  return {
+    path: path.resolve(__dirname, outputDir),
+    filename: 'bundle.js'
+  };
+}
+
+function getLoaders() {
+  var loaders = [
+    {
+        test: /\.scss$/,
+        include: /app/,
+        loader: 'style!css!sass',
+    },
+    {
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        loaders: [
+            'react-hot',
+            'babel?stage=0'
+        ]
+    }
+  ];
+
+  if (IS_PRODUCTION) {
+  } else {
+  }
+
+  return loaders;
+}
+
+function getPreLoaders() {
+  if (IS_PRODUCTION) {
+    return [{
+      test: /\.jsx?$/,
+      exclude: /(node_modules|bower_components)/,
+      loader: 'source-map'
+    }];
+  } else {
+    return [];
+  }
 }
