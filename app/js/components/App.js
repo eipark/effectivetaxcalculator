@@ -8,15 +8,15 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      year: '2014',
+      year: '2015',
     };
   },
 
   render() {
     return (
       <h1>
-        <input type='number' valueLink={this.linkState('year')}/> Marginal Tax Rate Calculator
-        {this.state.year} ok
+        <input type='number' valueLink={this.linkState('year')}/> <h1>Effective Tax Rate Calculator</h1>
+        {this.state.year} sdfs
       </h1>
     );
   }

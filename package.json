@@ -1,15 +1,15 @@
 {
-  "name": "humaan-demo-webpack-react-app",
+  "name": "effective-tax-calculator",
   "version": "1.0.0",
-  "description": "A basic environment for writing React apps in ES6 and built using webpack",
+  "description": "Effective tax rate calculator",
   "private": true,
   "scripts": {
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --hot --progress --colors --content-base build",
+    "local": "webpack-dev-server --devtool eval --hot --progress --colors --content-base build/",
     "deploy": "NODE_ENV=production webpack -p --config webpack.config.js",
     "web-server": "http-server -p 3000 .",
-    "start": "npm run webpack-server & npm run web-server"
+    "localxxx": "npm run webpack-dev-server & npm run web-server"
   },
   "keywords": [
     "demo"

@@ -7,13 +7,15 @@ module.exports = {
     entry: getEntrySources([
       path.resolve(__dirname, 'app/js/entry.js'),
     ]),
-    output: getOutput(),
+    output: {
+      path: path.resolve(__dirname, getOutputDir()),
+      filename: 'bundle.js'
+    },
     plugins: [
       new HtmlWebpackPlugin({
-        title: "marg: " + IS_PRODUCTION
+        title: "Effective Tax Rate Calculator"
       })
     ],
-    devtool: 'eval',
     module: {
         preLoaders: getPreLoaders(),
         loaders: getLoaders()
@@ -22,20 +24,11 @@ module.exports = {
 
 function getEntrySources(sources) {
     if (!IS_PRODUCTION) {
-        sources.push('webpack-dev-server/client?http://localhost:8080');
         sources.push('webpack/hot/dev-server');
+        sources.push('webpack-dev-server/client?http://localhost:8080');
     }
 
     return sources;
-}
-
-function getOutput() {
-  var outputDir = IS_PRODUCTION ? "dist" : "build";
-
-  return {
-    path: path.resolve(__dirname, outputDir),
-    filename: 'bundle.js'
-  };
 }
 
 function getLoaders() {
@@ -72,4 +65,8 @@ function getPreLoaders() {
   } else {
     return [];
   }
+}
+
+function getOutputDir() {
+  return IS_PRODUCTION ? "dist" : "build";
 }
