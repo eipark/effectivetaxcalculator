@@ -1,7 +1,19 @@
-html {
-  body {
-    font-size: 100%;
-    font-family: "Helvetica Neue", "Helvetica", "Arial";
-    font-weight: 200;
+body {
+  font-size: 100%;
+  font-family: "Helvetica Neue", "Helvetica", "Arial";
+}
+
+.bracket-table {
+  tbody tr:nth-child(even) {
+    background: #CCC;
   }
+
+  .selected-rate td {
+    background: red
+  }
+
+  .selected-file-type {
+    background: green
+  }
+
 }
