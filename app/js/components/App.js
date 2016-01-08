@@ -2,10 +2,14 @@ import React from 'react/addons';
 import {BracketData, getTaxValues} from '../data/brackets';
 import numeral from 'numeral';
 
-const CURRENCY_FORMAT = '$0,0';
 const formatCurrency = function(num) {
-  return numeral(num).format(CURRENCY_FORMAT);
+  return numeral(num).format('$0,0');
 };
+
+const formatPercentage = function(num) {
+  return numeral(num).format('0.00%');
+};
+
 
 export default React.createClass({
 
@@ -108,7 +112,67 @@ export default React.createClass({
     );
   },
 
-  renderCalculatedValues() {
+  renderCalculation(calculatedValues, taxableIncome) {
+    const calculation = calculatedValues.calculation;
+
+    const body = calculation.map(step => {
+      const {rate, lower, max, taxPaid} = step;
+      return (
+        <tr>
+          <td>{rate/100}</td>
+          <td>&times;</td>
+          <td>{formatCurrency(max)}</td>
+          <td>&#61;</td>
+          <td>{formatCurrency(taxPaid)}</td>
+        </tr>
+      );
+    });
+
+    return (
+      <table className='rate-calculation-table'>
+        <caption>How your effective tax rate is calculated based on {formatCurrency(taxableIncome)} taxable income</caption>
+        <thead>
+          <tr>
+            <th>Rate</th>
+            <th>&times;</th>
+            <th>Amount</th>
+            <th>&#61;</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          {body}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan={3} className='rate-calculation-total-label'>Total Tax Paid</td>
+            <td>&#61;</td>
+            <td className='rate-calculation-total'>
+              {formatCurrency(calculatedValues.totalTaxPaid)}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    );
+
+  },
+
+  renderCalculatedValues(calculatedValues, taxableIncome) {
+    return (
+      <div className='calculated-values'>
+        <div>
+          Effective Tax Rate: {formatPercentage(calculatedValues.effectiveRate)}
+        </div>
+        <div>
+          Tax Bracket: {calculatedValues.bracket}%
+        </div>
+        <div>
+          Total tax paid: {formatCurrency(calculatedValues.totalTaxPaid)}
+        </div>
+        {this.renderCalculation(calculatedValues, taxableIncome)}
+
+      </div>
+    );
   },
 
   render() {
@@ -125,7 +189,7 @@ export default React.createClass({
         </label>
         {this.renderFilingTypeSelect()}
         {this.renderBracketTable(calculatedValues, taxableIncome, year, filingType)}
-        {this.renderCalculatedValues(calculatedValues)}
+        {this.renderCalculatedValues(calculatedValues, taxableIncome)}
       </div>
     );
   }

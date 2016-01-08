@@ -145,13 +145,14 @@ const getTaxValues = function(year, taxableIncome, filingType) {
     const rateData = yearData[rate];
     const range = rateData[filingType];
 
-    const taxPaidInStep = (Math.min(taxableIncome, range.UPPER) - range.LOWER) * (rate/100);
+    const maxInBracket = Math.min(taxableIncome, range.UPPER);
+    const taxPaidInStep = (maxInBracket - range.LOWER) * (rate/100);
     totalTaxPaid += taxPaidInStep;
 
     calculation.push({
       rate,
       lower: range.LOWER,
-      upper: range.UPPER,
+      max: maxInBracket,
       taxPaid: taxPaidInStep
 
     })
