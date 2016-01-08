@@ -86,7 +86,7 @@ export default React.createClass({
           <tr>
             <th>Tax rate</th>
             <th>Single </th>
-            <th>Married filing jointly/Qualifying widow(er)</th>
+            <th>Married filing jointly /<br />Qualifying widow(er)</th>
             <th>Married filing separately</th>
             <th>Head of household</th>
           </tr>
@@ -188,8 +188,10 @@ export default React.createClass({
           <input type='number' valueLink={this.linkState('taxableIncome')}/>
         </label>
         {this.renderFilingTypeSelect()}
-        {this.renderBracketTable(calculatedValues, taxableIncome, year, filingType)}
-        {this.renderCalculatedValues(calculatedValues, taxableIncome)}
+        <div className='row'>
+          {this.renderCalculatedValues(calculatedValues, taxableIncome)}
+          {this.renderBracketTable(calculatedValues, taxableIncome, year, filingType)}
+        </div>
       </div>
     );
   }

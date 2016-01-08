@@ -38,7 +38,7 @@ table {
 .rate-calculation-table {
 
   min-width: 400px;
-  margin-top: 10px;
+  margin-top: 30px;
 
   thead th {
     text-align: left
@@ -58,5 +58,16 @@ table {
 }
 
 .calculated-values {
+  float: left;
+  width: 25%;
   margin-top: 20px;
+  font-size: 20px
 }
+
+.flexbox {
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+
+
