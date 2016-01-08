@@ -1,4 +1,4 @@
-export default {
+const BracketData = {
   2015: {
     "10": {
       SINGLE: {
@@ -127,6 +127,53 @@ export default {
       }
     },
   }
-
-
 };
+
+const getTaxValues = function(year, taxableIncome, filingType) {
+  let totalTaxPaid = 0;
+  let bracket;
+  let calculation = [];
+
+  /*
+    calculation = [
+      [{rate, lower, upper, totalTaxPaid}]
+    ]
+  */
+
+  const yearData = BracketData[year];
+  Object.keys(yearData).some(rate => {
+    const rateData = yearData[rate];
+    const range = rateData[filingType];
+
+    const taxPaidInStep = (Math.min(taxableIncome, range.UPPER) - range.LOWER) * (rate/100);
+    totalTaxPaid += taxPaidInStep;
+
+    calculation.push({
+      rate,
+      lower: range.LOWER,
+      upper: range.UPPER,
+      taxPaid: taxPaidInStep
+
+    })
+    if (range.LOWER <= taxableIncome && range.UPPER >= taxableIncome) {
+      bracket = rate;
+      return true; // short circuit the some
+    } else {
+      return false;
+    }
+  });
+
+  const effectiveRate = totalTaxPaid / taxableIncome;
+
+  return {
+    totalTaxPaid,
+    effectiveRate,
+    bracket,
+    calculation
+  }
+}
+
+export default {
+  BracketData,
+  getTaxValues
+}

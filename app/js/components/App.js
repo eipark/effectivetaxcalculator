@@ -1,5 +1,5 @@
 import React from 'react/addons';
-import BracketData from '../data/brackets';
+import {BracketData, getTaxValues} from '../data/brackets';
 import numeral from 'numeral';
 
 const CURRENCY_FORMAT = '$0,0';
@@ -50,16 +50,15 @@ export default React.createClass({
     });
   },
 
-  renderBracketRows(taxableIncome, year, filingType) {
+  renderBracketRows(calculatedValues, taxableIncome, year, filingType) {
     const yearData = BracketData[year];
-     let classNames;
+    let classNames;
 
     return Object.keys(yearData).map(rate => {
       const rateData = yearData[rate];
       const range = rateData[filingType];
 
-      // TODO: not sure which end is inclusive or not
-      if (range.LOWER <= taxableIncome && range.UPPER > taxableIncome) {
+      if (calculatedValues.bracket == rate) {
         classNames = 'selected-rate';
       } else {
         classNames = '';
@@ -75,7 +74,7 @@ export default React.createClass({
 
   },
 
-  renderBracketTable(taxableIncome, year, filingType) {
+  renderBracketTable(calculatedValues, taxableIncome, year, filingType) {
     return (
       <table className="bracket-table">
         <caption>2015 IRS Tax Brackets</caption>
@@ -89,7 +88,7 @@ export default React.createClass({
           </tr>
         </thead>
         <tbody>
-          {this.renderBracketRows(taxableIncome, year, filingType)}
+          {this.renderBracketRows(calculatedValues, taxableIncome, year, filingType)}
         </tbody>
       </table>
     );
@@ -109,8 +108,13 @@ export default React.createClass({
     );
   },
 
+  renderCalculatedValues() {
+  },
+
   render() {
     const {year, taxableIncome, filingType} = this.state;
+    console.log(getTaxValues(year, taxableIncome, filingType));
+    const calculatedValues = getTaxValues(year, taxableIncome, filingType);
 
     return (
       <div>
@@ -120,7 +124,8 @@ export default React.createClass({
           <input type='number' valueLink={this.linkState('taxableIncome')}/>
         </label>
         {this.renderFilingTypeSelect()}
-        {this.renderBracketTable(taxableIncome, year, filingType)}
+        {this.renderBracketTable(calculatedValues, taxableIncome, year, filingType)}
+        {this.renderCalculatedValues(calculatedValues)}
       </div>
     );
   }
