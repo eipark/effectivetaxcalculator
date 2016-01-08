@@ -13,7 +13,9 @@ module.exports = {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        title: "Effective Tax Rate Calculator"
+        title: "Effective Tax Rate Calculator",
+        template: "index-template.html",
+        inject: "body"
       })
     ],
     module: {
