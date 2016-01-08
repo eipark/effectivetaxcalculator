@@ -1,5 +1,11 @@
 import React from 'react/addons';
 import BracketData from '../data/brackets';
+import numeral from 'numeral';
+
+const CURRENCY_FORMAT = '$0,0';
+const formatCurrency = function(num) {
+  return numeral(num).format(CURRENCY_FORMAT);
+};
 
 export default React.createClass({
 
@@ -8,8 +14,8 @@ export default React.createClass({
   ],
 
   filingTypes: {
-    SINGLE: "Single filers",
-    JOINT_OR_WIDOW: "Married filing jointly or qualifying widow(er)",
+    SINGLE: "Single",
+    JOINT_OR_WIDOW: "Married filing jointly/Qualifying widow(er)",
     SEPARATE: "Married filing separately",
     HOH: "Head of household"
   },
@@ -24,11 +30,11 @@ export default React.createClass({
 
   rateToString({LOWER, UPPER}) {
     if (LOWER === 0) {
-      return `Up to ${UPPER}`;
+      return `Up to ${formatCurrency(UPPER)}`;
     } else if (UPPER === Infinity) {
-      return `${LOWER} or more`;
+      return `${formatCurrency(LOWER)} or more`;
     } else {
-      return `${LOWER} - ${UPPER}`;
+      return `${formatCurrency(LOWER)} - ${formatCurrency(UPPER)}`;
     }
   },
 
@@ -76,8 +82,8 @@ export default React.createClass({
         <thead>
           <tr>
             <th>Tax rate</th>
-            <th>Single filers</th>
-            <th>Married filing jointly or qualifying widow(er)</th>
+            <th>Single </th>
+            <th>Married filing jointly/Qualifying widow(er)</th>
             <th>Married filing separately</th>
             <th>Head of household</th>
           </tr>
