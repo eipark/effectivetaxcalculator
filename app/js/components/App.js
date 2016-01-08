@@ -104,7 +104,6 @@ export default React.createClass({
     });
     return (
       <label>
-        Filing Status:
         <select valueLink={this.linkState('filingType')}>
           {options}
         </select>
@@ -184,9 +183,10 @@ export default React.createClass({
       <div>
         <h1>Effective Tax Rate Calculator (United States)</h1>
         <label>
-          2015 Taxable Income:
+          In <strong>2015</strong>, I had a <strong>taxable income</strong> of $
           <input type='number' valueLink={this.linkState('taxableIncome')}/>
         </label>
+        and filed as
         {this.renderFilingTypeSelect()}
         <div className='row'>
           {this.renderCalculatedValues(calculatedValues, taxableIncome)}

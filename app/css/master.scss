@@ -59,7 +59,7 @@ table {
 
 .calculated-values {
   float: left;
-  width: 25%;
+  width: 425px;
   margin-top: 20px;
   font-size: 20px
 }
@@ -68,6 +68,10 @@ table {
   display: -ms-flex;
   display: -webkit-flex;
   display: flex;
+}
+
+input, select {
+  margin: 0 5px;
 }
 
 
