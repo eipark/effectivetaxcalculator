@@ -1,19 +1,29 @@
 body {
   font-size: 100%;
   font-family: "Helvetica Neue", "Helvetica", "Arial";
+  color: #444
 }
 
 .bracket-table {
+  th {
+    border-bottom: 2px solid #111;
+  }
+
+  td {
+    padding: 5px;
+  }
+
   tbody tr:nth-child(even) {
-    background: #CCC;
+    background: #EEE;
   }
 
-  .selected-rate td {
-    background: red
+  .selected-rate td, .selected-file-type {
+    background: rgb(206, 222, 245)
   }
 
-  .selected-file-type {
-    background: green
+  .selected-rate .selected-file-type {
+    font-weight: bold;
+    color: #111;
   }
 
 }
