@@ -182,17 +182,26 @@ export default React.createClass({
     return (
       <div>
         <h1>Effective Tax Rate Calculator (United States)</h1>
-        <label>
-          In <strong>2015</strong>, I had a <strong>taxable income</strong> of $
-          <input type='number' valueLink={this.linkState('taxableIncome')}/>
-        </label>
-        and filed as
-        {this.renderFilingTypeSelect()}
+        <div className='inputs-to-calculation'>
+          <label>
+            In <strong>2015</strong>, a <strong>taxable income</strong> of $
+            <input type='number' valueLink={this.linkState('taxableIncome')}/>
+          </label>
+            filed as
+          {this.renderFilingTypeSelect()}
+          would result in ...
+        </div>
+
+
         <div className='row'>
           {this.renderCalculatedValues(calculatedValues, taxableIncome)}
           {this.renderBracketTable(calculatedValues, taxableIncome, year, filingType)}
         </div>
+
+        <div className='description'>
+          Read more about the  <a href='http://www.investopedia.com/ask/answers/05/marginaltaxrate.asp' target="_blank">marginal tax rate system</a>.
+        </div>
       </div>
     );
-  }
+  },
 });

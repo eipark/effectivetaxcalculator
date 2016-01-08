@@ -72,6 +72,21 @@ table {
 
 input, select {
   margin: 0 5px;
+  font-size: 20px;
+  padding: 5px;
 }
 
+.row {
+  overflow: auto;
+}
 
+.inputs-to-calculation {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #CCC;
+}
+
+.description {
+  margin-top: 40px;
+  font-size: 12px;
+  color: #555;
+}
