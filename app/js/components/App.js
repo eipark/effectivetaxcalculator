@@ -199,6 +199,7 @@ export default React.createClass({
         </div>
 
         <div className='description'>
+          This calculator is based only on your taxable income. It does not factor in deductions, exemptions, or other considerations.<br />
           Read more about the  <a href='http://www.investopedia.com/ask/answers/05/marginaltaxrate.asp' target="_blank">marginal tax rate system</a>.
         </div>
       </div>
